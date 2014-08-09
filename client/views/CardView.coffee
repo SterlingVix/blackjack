@@ -1,6 +1,6 @@
 class window.CardView extends Backbone.View
 
-  className: 'card'
+  className: 'card' # gives html 'class="card" '
 
   template: _.template '<%= rankName %> of <%= suitName %>'
 
