@@ -26,7 +26,11 @@
         this.add(this.deck.pop()).last();
         return this.checkScore();
       } else {
-        return console.log("can't - I'm standing");
+        if (this.isStanding) {
+          return console.log("can't - I'm standing");
+        } else {
+          return console.log("can't - I'm busted");
+        }
       }
     };
 
@@ -55,26 +59,12 @@
       score = this.scores()[0];
       if (score > 21) {
         return this.bust();
-      } else {
-        if (this.isDealer != null) {
-          this.dealerLogik();
-        }
-        return score;
       }
     };
 
     Hand.prototype.bust = function() {
       this.isBusted = true;
       return this.trigger('bust', this);
-    };
-
-    Hand.prototype.dealerLogik = function() {
-      var score;
-      score = this.scores()[0];
-      if (score >= 17) {
-        console.log("Dealer stands");
-        return this.stand();
-      }
     };
 
     return Hand;

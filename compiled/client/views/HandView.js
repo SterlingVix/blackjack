@@ -12,6 +12,10 @@
 
     HandView.prototype.className = 'hand';
 
+    console.log(HandView);
+
+    HandView.prototype.tagName = 'table';
+
     HandView.prototype.template = _.template('<h2><% if(isDealer){ %>Dealer<% }else{ %>You<% } %> (<span class="score"></span>)</h2>');
 
     HandView.prototype.initialize = function() {

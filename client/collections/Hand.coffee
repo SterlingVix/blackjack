@@ -13,11 +13,16 @@ class window.Hand extends Backbone.Collection
       @checkScore() #invoke score check
       # console.log(@)
     else
-      console.log("can't - I'm standing")
+      if @isStanding
+        console.log("can't - I'm standing")
+      else
+        console.log("can't - I'm busted")
 
   stand: ->
     @isStanding = true
     @trigger('standing', this)
+    # console.log('player standing') # REMOVED "..., this)". This should trigger "standing" for App.coffee
+    # @trigger('standing', this)
 
   scores: ->
     # The scores are an array of potential scores.
@@ -36,19 +41,10 @@ class window.Hand extends Backbone.Collection
     score = @scores()[0]
     # console.log(score)
     if score > 21 then @bust()
-    else
-      if @isDealer? then @dealerLogik() #heck to see ifDealer; then invoke dealerLogik
-      score
 
   bust: ->
     @isBusted = true
     @trigger('bust', this)
 
-  dealerLogik: ->
-    score = @scores()[0]
-    if score >= 17
-      console.log("Dealer stands")
-      @stand()
-    # score
 
 # Hand.models[0].attributes.value # this is the card value

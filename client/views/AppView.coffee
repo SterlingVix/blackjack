@@ -1,7 +1,19 @@
 class window.AppView extends Backbone.View
 
+
+  # '<img src="img/cards/<%= rankName %>-<%= suitName %>.png" />'
+  # url("../img/card-back.png");
+  # <body src="img/cards/url('../img/card-back.png')" />
+  # <body src="img/cards/<%= rankName %>-<%= suitName %>.png" />
+
+
+  # HTML Elements:
+  # div.player-hand-container
+  # div.dealer-hand-container
+
   template: _.template '
-    <button class="hit-button">Hit</button> <button class="stand-button">Stand</button>
+    <body style="background-image: img/cards/url(\'../img/card-back.png\')" />
+    <button class="hit-button">Hit</button> <button class="stand-button">Stand</button><button class="newgame-button">New Game</button>
     <div class="player-hand-container"></div>
     <div class="dealer-hand-container"></div>
   '
@@ -11,13 +23,18 @@ class window.AppView extends Backbone.View
       @model.get('playerHand').hit()
       dealerScore = @model.get('dealerHand').checkScore() # THIS IS BROKE AND WE SHOULDN'T FIX IT + @model.get('dealerHand').models[0].attributes.value
 
-      console.log("dealerScore: ", dealerScore)
-      @model.get('dealerHand').hit()
-      #@model.get('dealerHand').models[0].flip() # flip the first card
+      # console.log("dealerScore: ", dealerScore)
+      # @model.get('dealerHand').hit()
 
       # dealer logic
 
-    "click .stand-button": -> @model.get('playerHand').stand()
+    "click .stand-button": ->
+      @model.get('playerHand').stand()
+      # @model.get('dealerHand').models[0].flip()
+      @model.get('dealerHand').checkScore()
+
+    "click .newgame-button":->
+      console.log('this is working')
 
     # "standing": -> @collection.on('standing', console.log('yay!'))
 
@@ -26,6 +43,7 @@ class window.AppView extends Backbone.View
     @render()
 
   render: ->
+    console.log(@$el)
     @$el.children().detach() # for 'this' binding
     @$el.html @template() # Bring in html definitions from template:
 

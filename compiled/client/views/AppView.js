@@ -10,18 +10,20 @@
       return AppView.__super__.constructor.apply(this, arguments);
     }
 
-    AppView.prototype.template = _.template('<button class="hit-button">Hit</button> <button class="stand-button">Stand</button> <div class="player-hand-container"></div> <div class="dealer-hand-container"></div>');
+    AppView.prototype.template = _.template('<body style="background-image: img/cards/url(\'../img/card-back.png\')" /> <button class="hit-button">Hit</button> <button class="stand-button">Stand</button><button class="newgame-button">New Game</button> <div class="player-hand-container"></div> <div class="dealer-hand-container"></div>');
 
     AppView.prototype.events = {
       "click .hit-button": function() {
         var dealerScore;
         this.model.get('playerHand').hit();
-        dealerScore = this.model.get('dealerHand').checkScore();
-        console.log("dealerScore: ", dealerScore);
-        return this.model.get('dealerHand').hit();
+        return dealerScore = this.model.get('dealerHand').checkScore();
       },
       "click .stand-button": function() {
-        return this.model.get('playerHand').stand();
+        this.model.get('playerHand').stand();
+        return this.model.get('dealerHand').checkScore();
+      },
+      "click .newgame-button": function() {
+        return console.log('this is working');
       }
     };
 
@@ -30,6 +32,7 @@
     };
 
     AppView.prototype.render = function() {
+      console.log(this.$el);
       this.$el.children().detach();
       this.$el.html(this.template());
       this.$('.player-hand-container').html(new HandView({

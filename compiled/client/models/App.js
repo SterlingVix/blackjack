@@ -14,7 +14,45 @@
       var deck;
       this.set('deck', deck = new Deck());
       this.set('playerHand', deck.dealPlayer());
-      return this.set('dealerHand', deck.dealDealer());
+      this.set('dealerHand', deck.dealDealer());
+      this.get('playerHand').on('standing', (function() {
+        return this.get('dealerHand').models[0].flip();
+      }), this);
+      this.get('playerHand').on('standing', (function() {
+        return this.dealerLogik();
+      }), this);
+      return this.get('playerHand').on('busted', (function() {}));
+    };
+
+    App.prototype.dealerLogik = function() {
+      var dealer, score;
+      dealer = this.get('dealerHand');
+      score = dealer.scores()[0];
+      while (dealer.scores()[0] < 17) {
+        console.log('dealer is hitting...');
+        dealer.hit();
+      }
+      dealer.stand();
+      this.trigger('gameOver', this);
+      this.determineWinner();
+      return console.log('dealer stands');
+    };
+
+    App.prototype.determineWinner = function() {
+      var dealer, dealerScore, player, playerScore;
+      dealer = this.get('dealerHand');
+      player = this.get('playerHand');
+      if (dealer.isBusted) {
+        trigger('playerWins', this);
+        console.log("player wins");
+      } else {
+        if (player.isBusted) {
+          trigger('dealerWins', this);
+          console.log("dealer wins");
+        }
+      }
+      dealerScore = dealer.scores()[0];
+      return playerScore = player.scores()[0];
     };
 
     return App;
