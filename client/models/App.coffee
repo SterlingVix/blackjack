@@ -9,7 +9,7 @@ class window.App extends Backbone.Model
     @get('playerHand').on 'standing', ( ->@get('dealerHand').models[0].flip()), this
     @get('playerHand').on 'standing', ( ->@dealerLogik()), this
     @get('playerHand').on 'busted', (-> )
-
+    @get('dealerHand').on 'standing', -> (->determineWinner())
 # @get('playerHand').isStanding
 # Does this reference HTML???   @collection.on 'score:add', => @render()
 # game logic goes here.
@@ -45,16 +45,23 @@ class window.App extends Backbone.Model
   determineWinner : ->
     dealer = @get('dealerHand')
     player = @get('playerHand')
+    dealerScore = 21 - dealer.scores()[0]
+    playerScore = 21 - player.scores()[0]
+
     if dealer.isBusted
-      trigger('playerWins', this)
-      console.log("player wins")
+      @trigger('playerWins', this)
+      alert("You won!")
+    if player.isBusted
+      @trigger('dealerWins', this)
+      alert("FREDDY wins")
+    if dealerScore < playerScore
+      @trigger('dealerWins', this)
+      alert("FREDDY wins")
     else
-      if player.isBusted
-        trigger('dealerWins', this)
-        console.log("dealer wins")
+      @trigger('playerWins', this)
+      alert("You win!")
 
-
-    # dealerScore = 21-@get('dealerHand').scores()[0]
-    dealerScore = dealer.scores()[0]
-    playerScore = player.scores()[0]
+    # # dealerScore = 21-@get('dealerHand').scores()[0]
+    # dealerScore = dealer.scores()[0]
+    # playerScore = player.scores()[0]
 

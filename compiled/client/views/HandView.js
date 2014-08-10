@@ -12,11 +12,7 @@
 
     HandView.prototype.className = 'hand';
 
-    console.log(HandView);
-
-    HandView.prototype.tagName = 'table';
-
-    HandView.prototype.template = _.template('<h2><% if(isDealer){ %>Dealer<% }else{ %>You<% } %> (<span class="score"></span>)</h2>');
+    HandView.prototype.template = _.template('<h1><% if(isDealer){ %><img src="img/hamu.gif"></img>ANGRY FRED<% }else{ %><img src="img/player.gif"></img>You<% } %> (<span class="score"></span>)</h1>');
 
     HandView.prototype.initialize = function() {
       this.collection.on('add remove change', (function(_this) {

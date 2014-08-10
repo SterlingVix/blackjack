@@ -64,7 +64,7 @@
 
     Hand.prototype.bust = function() {
       this.isBusted = true;
-      return this.trigger('bust', this);
+      return this.trigger('busted', this);
     };
 
     return Hand;

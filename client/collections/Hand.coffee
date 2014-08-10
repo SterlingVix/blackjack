@@ -44,7 +44,7 @@ class window.Hand extends Backbone.Collection
 
   bust: ->
     @isBusted = true
-    @trigger('bust', this)
+    @trigger('busted', this)
 
 
 # Hand.models[0].attributes.value # this is the card value

@@ -14,8 +14,8 @@ class window.AppView extends Backbone.View
   template: _.template '
     <body style="background-image: img/cards/url(\'../img/card-back.png\')" />
     <button class="hit-button">Hit</button> <button class="stand-button">Stand</button><button class="newgame-button">New Game</button>
-    <div class="player-hand-container"></div>
-    <div class="dealer-hand-container"></div>
+    <table><tr><td><div class="player-hand-container"></div></td><td width = 100px></td>
+    <td><div class="dealer-hand-container"></div></td></tr></table>
   '
 
   events:

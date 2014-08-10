@@ -21,7 +21,12 @@
       this.get('playerHand').on('standing', (function() {
         return this.dealerLogik();
       }), this);
-      return this.get('playerHand').on('busted', (function() {}));
+      this.get('playerHand').on('busted', (function() {}));
+      return this.get('dealerHand').on('standing', function() {
+        return function() {
+          return determineWinner();
+        };
+      });
     };
 
     App.prototype.dealerLogik = function() {
@@ -42,17 +47,23 @@
       var dealer, dealerScore, player, playerScore;
       dealer = this.get('dealerHand');
       player = this.get('playerHand');
+      dealerScore = 21 - dealer.scores()[0];
+      playerScore = 21 - player.scores()[0];
       if (dealer.isBusted) {
-        trigger('playerWins', this);
-        console.log("player wins");
-      } else {
-        if (player.isBusted) {
-          trigger('dealerWins', this);
-          console.log("dealer wins");
-        }
+        this.trigger('playerWins', this);
+        alert("You won!");
       }
-      dealerScore = dealer.scores()[0];
-      return playerScore = player.scores()[0];
+      if (player.isBusted) {
+        this.trigger('dealerWins', this);
+        alert("FREDDY wins");
+      }
+      if (dealerScore < playerScore) {
+        this.trigger('dealerWins', this);
+        return alert("FREDDY wins");
+      } else {
+        this.trigger('playerWins', this);
+        return alert("You win!");
+      }
     };
 
     return App;
