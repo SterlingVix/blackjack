@@ -5,23 +5,15 @@ class window.AppView extends Backbone.View
     <div class="player-hand-container"></div>
     <div class="dealer-hand-container"></div>
   '
+# $('.card').first().slideToggle()
 
   events:
     "click .hit-button": ->
       @model.get('playerHand').hit()
-      dealerScore = @model.get('dealerHand').checkScore() # THIS IS BROKE AND WE SHOULDN'T FIX IT + @model.get('dealerHand').models[0].attributes.value
-
-      console.log("dealerScore: ", dealerScore)
-      @model.get('dealerHand').hit()
-      #@model.get('dealerHand').models[0].flip() # flip the first card
-
-      # dealer logic
-
-    "click .stand-button": -> @model.get('playerHand').stand()
-
-    # "standing": -> @collection.on('standing', console.log('yay!'))
-
-
+    "click .stand-button": ->
+      @model.get('playerHand').stand() # player stands
+      @model.get('dealerHand').hit()   # dealer hits
+      
   initialize: ->
     @render()
 

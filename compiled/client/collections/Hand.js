@@ -22,17 +22,16 @@
     };
 
     Hand.prototype.hit = function() {
-      if (!this.isStanding && !this.isBusted) {
-        this.add(this.deck.pop()).last();
-        return this.checkScore();
-      } else {
-        return console.log("can't - I'm standing");
-      }
+      this.add(this.deck.pop()).last();
+      return this.checkScore();
     };
 
     Hand.prototype.stand = function() {
-      this.isStanding = true;
-      return this.trigger('standing', this);
+      if (this.isDealer != null) {
+        return this.trigger('dealerStands');
+      } else {
+        return this.trigger('playerStands');
+      }
     };
 
     Hand.prototype.scores = function() {
@@ -53,27 +52,18 @@
     Hand.prototype.checkScore = function() {
       var score;
       score = this.scores()[0];
-      if (score > 21) {
-        return this.bust();
-      } else {
-        if (this.isDealer != null) {
-          this.dealerLogik();
+      if (this.isDealer != null) {
+        if (score > 21) {
+          return this.trigger('dealerBust');
+        } else if (score > 16) {
+          return this.trigger('dealerStands');
+        } else {
+          return this.hit();
         }
-        return score;
-      }
-    };
-
-    Hand.prototype.bust = function() {
-      this.isBusted = true;
-      return this.trigger('bust', this);
-    };
-
-    Hand.prototype.dealerLogik = function() {
-      var score;
-      score = this.scores()[0];
-      if (score >= 17) {
-        console.log("Dealer stands");
-        return this.stand();
+      } else {
+        if (score > 21) {
+          return this.trigger('playerBust');
+        }
       }
     };
 

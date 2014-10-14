@@ -24,6 +24,7 @@
     };
 
     CardView.prototype.render = function() {
+      alert("rendering");
       this.$el.children().detach().end().html;
       this.$el.html(this.template(this.model.attributes));
       if (!this.model.get('revealed')) {

@@ -5,14 +5,27 @@ class window.App extends Backbone.Model
     @set 'deck', deck = new Deck()
     @set 'playerHand', deck.dealPlayer()
     @set 'dealerHand', deck.dealDealer()
+    
+    # Listeners:
+    @attributes.playerHand.on('busted', @dealerWins)
+    @attributes.dealerHand.on('busted', @playerWins)
+    #@attributes.playerHand.on('playerStands', @dealerPlays)
+    @attributes.dealerHand.on('dealerStands', @gameOver)
+    # this.attributes...
+    # this.__proto__.hit()
 
-# Does this reference HTML???   @collection.on 'score:add', => @render()
-# game logic goes here.
-# @get 'dealerHand'
-
-  # score evaluation?
-  #
-
-# 1) Identify the score change listener
-  # A) @get('playerHand').scores()[0])
-#
+  dealerPlays: ->
+  debugger;
+    @get('dealerHand').models[0].flip() # flip the first card
+    @get('dealerHand').hit() # dealer takes first hit
+      
+  dealerWins: ->
+    alert("Dealer wins")
+    
+  playerWins: ->
+    alert("Player wins")
+  
+  gameOver: ->
+#     @attributes.playerHand
+#     @attributes.dealerHand
+    alert(this, "Game Over")
