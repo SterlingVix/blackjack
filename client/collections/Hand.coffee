@@ -7,6 +7,7 @@ class window.Hand extends Backbone.Collection
     @isBusted = false
 
   hit: ->
+<<<<<<< HEAD
     @add(@deck.pop()).last()
     @checkScore() #invoke score check
 
@@ -15,6 +16,24 @@ class window.Hand extends Backbone.Collection
       @trigger('dealerStands')
     else # player stands
       @trigger('playerStands') # trigger the dealer hit
+=======
+    if !@isStanding and !@isBusted
+      @add(@deck.pop()).last()
+      # @trigger('hit', this)
+      @checkScore() #invoke score check
+      # console.log(@)
+    else
+      if @isStanding
+        console.log("can't - I'm standing")
+      else
+        console.log("can't - I'm busted")
+
+  stand: ->
+    @isStanding = true
+    @trigger('standing', this)
+    # console.log('player standing') # REMOVED "..., this)". This should trigger "standing" for App.coffee
+    # @trigger('standing', this)
+>>>>>>> 76bd8179390aa4673727404f0b7c655908dd015a
 
     # The scores are an array of potential scores.
     # Usually, that array contains one element. That is the only score.
@@ -29,6 +48,7 @@ class window.Hand extends Backbone.Collection
     , 0
     if hasAce then [score, score + 10] else [score]
 
+<<<<<<< HEAD
 
 # @model.get('playerHand').hit()
 
@@ -43,3 +63,16 @@ class window.Hand extends Backbone.Collection
       else if score > 16 then @trigger('dealerStands') # dealer stands
       else @hit()
     else # player options
+=======
+  checkScore: ->
+    score = @scores()[0]
+    # console.log(score)
+    if score > 21 then @bust()
+
+  bust: ->
+    @isBusted = true
+    @trigger('busted', this)
+
+
+# Hand.models[0].attributes.value # this is the card value
+>>>>>>> 76bd8179390aa4673727404f0b7c655908dd015a

@@ -22,8 +22,21 @@
     };
 
     Hand.prototype.hit = function() {
+<<<<<<< HEAD
       this.add(this.deck.pop()).last();
       return this.checkScore();
+=======
+      if (!this.isStanding && !this.isBusted) {
+        this.add(this.deck.pop()).last();
+        return this.checkScore();
+      } else {
+        if (this.isStanding) {
+          return console.log("can't - I'm standing");
+        } else {
+          return console.log("can't - I'm busted");
+        }
+      }
+>>>>>>> 76bd8179390aa4673727404f0b7c655908dd015a
     };
 
     Hand.prototype.stand = function() {
@@ -52,6 +65,7 @@
     Hand.prototype.checkScore = function() {
       var score;
       score = this.scores()[0];
+<<<<<<< HEAD
       if (this.isDealer != null) {
         if (score > 21) {
           return this.trigger('dealerBust');
@@ -65,6 +79,16 @@
           return this.trigger('playerBust');
         }
       }
+=======
+      if (score > 21) {
+        return this.bust();
+      }
+    };
+
+    Hand.prototype.bust = function() {
+      this.isBusted = true;
+      return this.trigger('busted', this);
+>>>>>>> 76bd8179390aa4673727404f0b7c655908dd015a
     };
 
     return Hand;
